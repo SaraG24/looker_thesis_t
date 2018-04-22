@@ -16,4 +16,18 @@ persist_with: sara_thesis_test_default_datagroup
 # NOTE: please see https://looker.com/docs/r/sql/bigquery?version=5.12
 # NOTE: for BigQuery specific considerations
 
-explore: global_terrorism {}
+# explore: global_terrorism {}
+
+explore: terrorism_global_table {
+  from: terrorism_global_table_2
+  label: "Global Table"
+}
+
+
+explore: top_10_terrorist_groups{
+  from: dt_top_10_terrorist_groups
+}
+
+explore: incidents_by_attack_types {
+  from: incidents_by_attack_types
+}
