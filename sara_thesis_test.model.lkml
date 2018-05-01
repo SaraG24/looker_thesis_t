@@ -18,11 +18,11 @@ persist_with: sara_thesis_test_default_datagroup
 
 # explore: global_terrorism {}
 
-explore: terrorism_global_table {
-  from: terrorism_global_table_2
+explore: terrorism_global_table_2 {
   label: "Global Table"
 }
 
+explore: target_type_count {}
 
 explore: top_10_terrorist_groups{
   from: dt_top_10_terrorist_groups
@@ -30,4 +30,8 @@ explore: top_10_terrorist_groups{
 
 explore: incidents_by_attack_types {
   from: incidents_by_attack_types
+}
+
+explore: calendar {
+
 }

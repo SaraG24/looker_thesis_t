@@ -1,4 +1,5 @@
 view: terrorism_global_table_2 {
+  label: "Global Terrorism"
   sql_table_name: Thesis.global_terrorism ;;
 
   dimension: eventid {
@@ -44,6 +45,7 @@ view: terrorism_global_table_2 {
   dimension: iyear {
     type: number
     sql: ${TABLE}.iyear ;;
+    value_format_name: id
   }
 
   dimension_group: date {
@@ -110,22 +112,22 @@ view: terrorism_global_table_2 {
 
 
   dimension: targtype1_txt {
-    label: "Target type 1"
+    label: "Entity Target"
     type: string
     sql: ${TABLE}.targtype1_txt ;;
   }
 
-  dimension: targtype2_txt {
-    label: "Target type 2"
-    type: string
-    sql: ${TABLE}.targtype2_txt ;;
-  }
-
-  dimension: targtype3_txt {
-    label: "Target type 3"
-    type: string
-    sql: ${TABLE}.targtype3_txt ;;
-  }
+#   dimension: targtype2_txt {
+#     label: "Target type 2"
+#     type: string
+#     sql: ${TABLE}.targtype2_txt ;;
+#   }
+#
+#   dimension: targtype3_txt {
+#     label: "Target type 3"
+#     type: string
+#     sql: ${TABLE}.targtype3_txt ;;
+#   }
 
   dimension: propcomment {
     label: "Propperty Damage Description"
@@ -148,7 +150,7 @@ view: terrorism_global_table_2 {
   }
 
   dimension: target1 {
-    label: "Target"
+    label: "Main Target"
     type: string
     sql: ${TABLE}.target1 ;;
   }
@@ -283,17 +285,22 @@ measure: median_casualties {
   value_format: "0.00"
 }
 
+# measure: entity_target {
+#   type: count_distinct
+#   sql: ${TABLE}.targtype1_txt ;;
+# }
+
 # #   measure: attacktype1 {
 # #     type: count
 # #     sql: ${TABLE}.attacktype1 ;;
 #
 # #   }
 # #
-# #   measure: count {
-# #     type: count
-# #     approximate_threshold: 100000
-# #     drill_fields: [gname]
+measure: count {
+  type: count
+  approximate_threshold: 100000
+  drill_fields: [targtype1_txt]
+  }
 # #
-
 
 }
