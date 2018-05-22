@@ -1,14 +1,14 @@
 view: dt_top_10_terrorist_groups {
   derived_table: {
     sql: SELECT
-        gname  AS top_50_terrorist_groups_name,
-        COUNT(*) AS top_50_terrorist_groups_incident_count,
-        round(sum( nkill)) as top_50_terrorist_groups_kill_sum,
+        gname  AS group_name,
+        COUNT(*) AS incident_count,
+        round(sum( nkill)) as total_casualties,
         sum( case when ransom > 0 then ransom end) as top_50_terrorist_groups_ranson,
-        sum( ransomamt) as top_50_terrorist_groups_ransom_asked_sum,
-        sum( ransompaidus) as top_50_terrorist_groups_ransom_paid_us_sum,
-        count( case when success=1 then 1 else null end) as top_50_terrorist_groups_incident_success_count,
-        sum(suicide) as top_50_terrorist_groups_incident_sucide_count,
+        sum( ransomamt) as asked_sum,
+        sum( ransompaidus) as paid_us_sum,
+        count( case when success=1 then 1 else null end) as incident_success_count,
+        sum(suicide) as incident_sucide_count,
         count( distinct attacktype1 ) as top_50_terrorist_groups_distinct_attack_types
         FROM [magnetic-planet-167816:Thesis.global_terrorism]
         where gname !='Unknown'
@@ -23,62 +23,74 @@ view: dt_top_10_terrorist_groups {
     drill_fields: [detail*]
   }
 
-  dimension: top_50_terrorist_groups_name {
+  dimension: group_name {
     type: string
-    sql: ${TABLE}.top_50_terrorist_groups_name ;;
+    sql: ${TABLE}.group_name ;;
   }
 
-  dimension: top_50_terrorist_groups_incident_count {
+  dimension: incident_count {
     type: number
-    sql: ${TABLE}.top_50_terrorist_groups_incident_count ;;
+    sql: ${TABLE}.incident_count ;;
   }
 
-  dimension: top_50_terrorist_groups_kill_sum {
-    type: number
-    sql: ${TABLE}.top_50_terrorist_groups_kill_sum ;;
+  measure: count_incident {
+    type: sum
+    sql: ${incident_count} ;;
   }
+
+  dimension: total_casualties {
+    type: number
+    sql: ${TABLE}.total_casualties ;;
+  }
+
+  measure: casualties_total {
+    type: sum
+    sql: ${total_casualties} ;;
+  }
+
+
 
   dimension: top_50_terrorist_groups_ranson {
     type: number
     sql: ${TABLE}.top_50_terrorist_groups_ranson ;;
   }
 
-  dimension: top_50_terrorist_groups_ransom_asked_sum {
+  dimension: asked_sum {
     type: number
-    sql: ${TABLE}.top_50_terrorist_groups_ransom_asked_sum ;;
+    sql: ${TABLE}.asked_sum ;;
   }
 
-  dimension: top_50_terrorist_groups_ransom_paid_us_sum {
+  dimension: paid_us_sum {
     type: number
-    sql: ${TABLE}.top_50_terrorist_groups_ransom_paid_us_sum ;;
+    sql: ${TABLE}.paid_us_sum ;;
   }
 
-  dimension: top_50_terrorist_groups_incident_success_count {
+  dimension: incident_success_count {
     type: number
-    sql: ${TABLE}.top_50_terrorist_groups_incident_success_count ;;
+    sql: ${TABLE}.incident_success_count ;;
   }
 
-  dimension: top_50_terrorist_groups_incident_sucide_count {
+  dimension: incident_sucide_count {
     type: number
-    sql: ${TABLE}.top_50_terrorist_groups_incident_sucide_count ;;
+    sql: ${TABLE}.incident_sucide_count ;;
   }
 
-  dimension: top_50_terrorist_groups_distinct_attack_types {
+  dimension: distinct_attack_types {
     type: number
-    sql: ${TABLE}.top_50_terrorist_groups_distinct_attack_types ;;
+    sql: ${TABLE}.distinct_attack_types ;;
   }
 
   set: detail {
     fields: [
-      top_50_terrorist_groups_name,
-      top_50_terrorist_groups_incident_count,
-      top_50_terrorist_groups_kill_sum,
+      group_name,
+      incident_count,
+      total_casualties,
       top_50_terrorist_groups_ranson,
-      top_50_terrorist_groups_ransom_asked_sum,
-      top_50_terrorist_groups_ransom_paid_us_sum,
-      top_50_terrorist_groups_incident_success_count,
-      top_50_terrorist_groups_incident_sucide_count,
-      top_50_terrorist_groups_distinct_attack_types
+      asked_sum,
+      paid_us_sum,
+      incident_success_count,
+      incident_sucide_count,
+      distinct_attack_types
     ]
   }
 }

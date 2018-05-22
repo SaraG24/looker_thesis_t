@@ -22,6 +22,7 @@ explore: terrorism_global_table_2 {
   label: "Global Table"
 }
 
+
 explore: target_type_count {}
 
 explore: top_10_terrorist_groups{
@@ -33,5 +34,7 @@ explore: incidents_by_attack_types {
 }
 
 explore: calendar {
+  hidden: yes
+  from: calendar
 
 }
