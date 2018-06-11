@@ -26,7 +26,11 @@ view: dt_top_10_terrorist_groups {
   dimension: group_name {
     type: string
     sql: ${TABLE}.group_name ;;
-  }
+    link: {
+      label: "Search for it"
+      url: "https://www.google.ie/search?q= {{ value }}"
+      icon_url: "https://d30y9cdsu7xlg0.cloudfront.net/png/582402-200.png"
+  }}
 
   dimension: incident_count {
     type: number
@@ -58,6 +62,34 @@ view: dt_top_10_terrorist_groups {
   dimension: asked_sum {
     type: number
     sql: ${TABLE}.asked_sum ;;
+  }
+
+
+#   dimension: test_dinamic {
+#     type: number
+#     sql:  ${TABLE}.{% parameter sum_asked_amount %};;
+#   }
+
+  measure: test_dinamic {
+    type: sum
+    sql:  ${TABLE}.{% parameter sum_asked_amount %};;
+  }
+
+
+  parameter: sum_asked_amount {
+    type: unquoted
+    allowed_value: {
+      label: "mucho dinero"
+      value: "8,057,703"
+    }
+#     allowed_value: {
+#       label: "a loooot"
+#       value: "100"
+#     }
+#     allowed_value: {
+#       label: "far too much"
+#       value: "150"
+#     }
   }
 
   dimension: paid_us_sum {

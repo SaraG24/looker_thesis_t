@@ -34,7 +34,7 @@ explore: incidents_by_attack_types {
 }
 
 explore: calendar {
-  hidden: yes
+#   hidden: yes
   from: calendar
 
 }
